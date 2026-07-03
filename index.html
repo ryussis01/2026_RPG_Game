@@ -6,8 +6,6 @@
 
   <title>설날 새뱃돈 대작전</title>
 
-  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-
   <style>
     html, body {
       margin: 0;
@@ -18,17 +16,16 @@
       overflow: hidden;
     }
 
-    #game-wrap {
+    #page-wrap {
       width: 750px;
       height: 600px;
-      margin: 0 auto;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       background: transparent;
     }
 
-    #game-box {
+    #flash-container {
       width: 500px;
       height: 400px;
       background: #000;
@@ -40,16 +37,51 @@
       display: block;
     }
   </style>
+
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      autoplay: "on",
+      unmuteOverlay: "hidden",
+      warnOnUnsupportedContent: false,
+      allowScriptAccess: true
+    };
+  </script>
+
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 </head>
 
 <body>
-  <div id="game-wrap">
-    <div id="game-box">
-      <ruffle-player
-        src="./sulnalbigjacjun.swf"
-        autoplay>
-      </ruffle-player>
-    </div>
+  <div id="page-wrap">
+    <div id="flash-container"></div>
   </div>
+
+  <script>
+    window.addEventListener("load", async function () {
+      const container = document.getElementById("flash-container");
+
+      try {
+        const ruffle = window.RufflePlayer.newest();
+        const player = ruffle.createPlayer();
+
+        player.style.width = "500px";
+        player.style.height = "400px";
+
+        container.innerHTML = "";
+        container.appendChild(player);
+
+        await player.load({
+          url: "./sulnalbigjacjun.swf",
+          allowScriptAccess: true
+        });
+
+        console.log("SWF loaded successfully");
+      } catch (error) {
+        console.error("Ruffle load failed:", error);
+        container.innerHTML =
+          '<div style="color:white; padding:20px; font-family:sans-serif;">SWF 로드 실패: 콘솔을 확인해주세요.</div>';
+      }
+    });
+  </script>
 </body>
 </html>
