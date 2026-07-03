@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>설날 새뱃돈 대작전</title>
+
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game-wrap {
+      width: 500px;
+      height: 400px;
+      background: #000;
+    }
+
+    ruffle-player {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="game-wrap">
+    <ruffle-player
+      src="./sulnalbigjacjun.swf"
+      autoplay>
+    </ruffle-player>
+  </div>
+</body>
+</html>
