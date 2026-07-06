@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>헬로드림송 플래시 엽기송</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #page-wrap {
+      width: 550px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+    }
+
+    #flash-container {
+      width: 450px;
+      height: 300px;
+      background: #000;
+      position: relative;
+    }
+
+    ruffle-player {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #start-screen {
+      width: 450px;
+      height: 300px;
+      background: #eef7ff;
+      border: 3px solid #78b8ff;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      text-align: center;
+    }
+
+    #start-screen h1 {
+      font-size: 25px;
+      margin: 0 0 12px;
+      color: #2477c7;
+    }
+
+    #start-screen p {
+      font-size: 14px;
+      margin: 0 0 18px;
+      color: #34566f;
+      line-height: 1.5;
+    }
+
+    #play-button {
+      border: 0;
+      background: #4aa3ff;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(74, 163, 255, 0.35);
+    }
+
+    #play-button:hover {
+      background: #2477c7;
+    }
+  </style>
+
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      autoplay: "on",
+      unmuteOverlay: "hidden",
+      warnOnUnsupportedContent: false,
+      allowScriptAccess: true
+    };
+  </script>
+
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+</head>
+
+<body>
+  <div id="page-wrap">
+    <div id="flash-container">
+      <div id="start-screen">
+        <h1>헬로드림송</h1>
+        <p>버튼을 누르면<br />플래시 엽기송이 재생됩니다.</p>
+        <button id="play-button">▶ 재생하기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("play-button").addEventListener("click", async function () {
+      const container = document.getElementById("flash-container");
+
+      try {
+        container.innerHTML = "";
+
+        const ruffle = window.RufflePlayer.newest();
+        const player = ruffle.createPlayer();
+
+        player.style.width = "450px";
+        player.style.height = "300px";
+
+        container.appendChild(player);
+
+        await player.load({
+          url: "./hello_dream_song.swf",
+          allowScriptAccess: true
+        });
+
+        console.log("Hello Dream Song loaded successfully");
+      } catch (error) {
+        console.error("Ruffle load failed:", error);
+        container.innerHTML =
+          '<div style="color:white; padding:20px; font-family:sans-serif;">SWF 로드 실패: 콘솔을 확인해주세요.</div>';
+      }
+    });
+  </script>
+</body>
+</html>
